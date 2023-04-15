@@ -44,6 +44,7 @@ from pathlib import Path
 from Arcface import app
 import torch
 import time
+import numpy as np
 
 
 FILE = Path(__file__).resolve()
@@ -180,8 +181,9 @@ def run(
                         crop = save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
                         # cv2.imwrite("crop.jpg", crop)
                         if crop.shape[1] > 500:
-                            Image.fromarray(crop[..., ::-1]).save("crop.jpg", quality=95, subsampling=0)  # save RGB
-                            app.inference("crop.jpg", time.time())
+                            # Image.fromarray(crop[..., ::-1]).save("crop.jpg", quality=95, subsampling=0)  # save RGB
+                            fin_img = cv2.cvtColor(np.array(Image.fromarray(crop[..., ::-1])), cv2.COLOR_RGB2BGR)
+                            app.inference(fin_img, time.time())
 
             # Stream results
             im0 = annotator.result()
