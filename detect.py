@@ -180,7 +180,7 @@ def run(
                     if save_crop:
                         crop = save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
                         # cv2.imwrite("crop.jpg", crop)
-                        if crop.shape[1] > 500:
+                        if crop.shape[1] > 1:
                             # Image.fromarray(crop[..., ::-1]).save("crop.jpg", quality=95, subsampling=0)  # save RGB
                             fin_img = cv2.cvtColor(np.array(Image.fromarray(crop[..., ::-1])), cv2.COLOR_RGB2BGR)
                             app.inference(fin_img, time.time())
@@ -261,11 +261,9 @@ def parse_opt():
     print_args(vars(opt))
     return opt
 
-
 def main(opt):
     check_requirements(exclude=('tensorboard', 'thop'))
     run(**vars(opt))
-
 
 if __name__ == "__main__":
     opt = parse_opt()

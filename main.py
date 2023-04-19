@@ -1,9 +1,11 @@
 import detect
 
-VIDEO_PATH = 'test.mp4'
+VIDEO_PATH = 'test2.mp4'
 
 def object_detection():
-    detect(source=VIDEO_PATH)
+    detect.main(detect.parse_opt())
 
 if __name__ == '__main__':
+    with open("logfaces.json","w") as f:
+        f.write("[]")
     object_detection()
