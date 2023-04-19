@@ -178,6 +178,7 @@ def inference(com_img, ftime):
         if dist < min_dist:
             min_dist = dist
             min_name = key
+    
     if min_dist > 0.8:
     # # if np.dot(com_out, embeddings_name[min_name].T) > 0.8:
         print('No similar face found')
@@ -186,11 +187,12 @@ def inference(com_img, ftime):
         data = json.load(f)
         data.append({"0":[min_name,ftime]})
         print([min_name,ftime])
-        cv2.imwrite(f"crops/detect_{min_name}_{ftime}.jpg", com_img)
+        print('-'*10+f"recognized {min_name} at time {ftime} at dist {min_dist}"+'-'*10)
+        cv2.imwrite(f"crops/{min_name}_{ftime}.jpg", com_img)
     with open("logfaces.json","w") as f:
         json.dump(data,f)
-    print('The most similar image is: ', min_name)
-    print('The distance is: ', min_dist)
+    # print('The most similar image is: ', min_name)
+    # print('The distance is: ', min_dist)
     # print('The similarity is: ', np.dot(com_out, embeddings_name[min_name].T))
 
 #   # Load first image
