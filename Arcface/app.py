@@ -153,13 +153,22 @@ model = get_model(ctx, model_name)
 embeddings_name = {}
 
 def update_face_data(dirname):
-    files = os.listdir(dirname)
-    for file in files:
-        if file.endswith('.jpg'):
-            img = cv2.imread(os.path.join(dirname, file))
-            pre = get_input(detector, img)
-            out = get_feature(model, pre)
-            embeddings_name[file] = out
+    if not(type(dirname) is list):
+        files = os.listdir(dirname)
+        for file in files:
+            if file.endswith('.jpg'):
+                img = cv2.imread(os.path.join(dirname, file))
+                pre = get_input(detector, img)
+                out = get_feature(model, pre)
+                embeddings_name[file] = out
+    else:
+        files = dirname
+        for file in files:
+            if file.endswith('.jpg'):
+                img = cv2.imread(file)
+                pre = get_input(detector, img)
+                out = get_feature(model, pre)
+                embeddings_name[file] = out
 
 def inference(com_img, ftime, THRESHOLD=0.8):
     # com_img = cv2.imread(image)
