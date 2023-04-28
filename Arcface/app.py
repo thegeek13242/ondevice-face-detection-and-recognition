@@ -161,7 +161,7 @@ def update_face_data(dirname):
             out = get_feature(model, pre)
             embeddings_name[file] = out
 
-def inference(com_img, ftime):
+def inference(com_img, ftime, THRESHOLD=0.8):
     # com_img = cv2.imread(image)
     com_pre = get_input(detector, com_img)
     try: 
@@ -179,18 +179,20 @@ def inference(com_img, ftime):
             min_dist = dist
             min_name = key
     
-    if min_dist > 0.8:
+    if min_dist > THRESHOLD:
     # # if np.dot(com_out, embeddings_name[min_name].T) > 0.8:
         print('No similar face found')
-        return
-    with open("logfaces.json","r") as f:
-        data = json.load(f)
-        data.append({"0":[min_name,ftime]})
-        print([min_name,ftime])
-        print('-'*10+f"recognized {min_name} at time {ftime} at dist {min_dist}"+'-'*10)
-        cv2.imwrite(f"crops/{min_name}_{ftime}.jpg", com_img)
-    with open("logfaces.json","w") as f:
-        json.dump(data,f)
+        return " "
+    else:
+        with open("logfaces.json","r") as f:
+            data = json.load(f)
+            data.append({"0":[min_name,ftime]})
+            print([min_name,ftime])
+            print('-'*10+f"recognized {min_name} at time {ftime} at dist {min_dist}"+'-'*10)
+            cv2.imwrite(f"crops/{min_name}_{ftime}.jpg", com_img)
+        with open("logfaces.json","w") as f:
+            json.dump(data,f)
+        return min_name
     # print('The most similar image is: ', min_name)
     # print('The distance is: ', min_dist)
     # print('The similarity is: ', np.dot(com_out, embeddings_name[min_name].T))

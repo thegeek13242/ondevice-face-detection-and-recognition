@@ -2,6 +2,7 @@
 # Usage: pip install -r requirements.txt
 
 # Base ------------------------------------------------------------------------
+natsort
 gitpython
 ipython  # interactive notebook
 matplotlib>=3.2.2

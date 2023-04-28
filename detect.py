@@ -84,6 +84,7 @@ def run(
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
         vid_stride=1,  # video frame-rate stride
+        threshold_arcface=0.8,
 ):
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
@@ -176,15 +177,18 @@ def run(
                         c = int(cls)  # integer class
                         label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
 
-                        annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
                         crop = save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
                         # cv2.imwrite("crop.jpg", crop)
                         if crop.shape[1] > 1:
                             # Image.fromarray(crop[..., ::-1]).save("crop.jpg", quality=95, subsampling=0)  # save RGB
                             fin_img = cv2.cvtColor(np.array(Image.fromarray(crop[..., ::-1])), cv2.COLOR_RGB2BGR)
-                            app.inference(fin_img, time.time())
-
+                            name = app.inference(fin_img, time.time(), threshold_arcface)
+                            if name == "":
+                                annotator.box_label(xyxy, name, color=(10,20,30))
+                            else:
+                                annotator.box_label(xyxy, name, color=colors(c, True))
+    
             # Stream results
             im0 = annotator.result()
             if view_img:
@@ -255,7 +259,7 @@ def parse_opt():
     parser.add_argument('--hide-conf', default=False, action='store_true', help='hide confidences')
     parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
     parser.add_argument('--dnn', action='store_true', help='use OpenCV DNN for ONNX inference')
-    parser.add_argument('--vid-stride', type=int, default=5, help='video frame-rate stride')
+    parser.add_argument('--vid-stride', type=int, default=2, help='video frame-rate stride')
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
     print_args(vars(opt))
