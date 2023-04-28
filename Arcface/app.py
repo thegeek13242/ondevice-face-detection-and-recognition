@@ -195,6 +195,7 @@ def inference(com_img, ftime, THRESHOLD=0.8):
     else:
         with open("logfaces.json","r") as f:
             data = json.load(f)
+            min_name = min_name.split('.')[0]
             data.append({"0":[min_name,ftime]})
             print([min_name,ftime])
             print('-'*10+f"recognized {min_name} at time {ftime} at dist {min_dist}"+'-'*10)

@@ -184,7 +184,7 @@ def run(
                         if crop.shape[1] > 1:
                             # Image.fromarray(crop[..., ::-1]).save("crop.jpg", quality=95, subsampling=0)  # save RGB
                             fin_img = cv2.cvtColor(np.array(Image.fromarray(crop[..., ::-1])), cv2.COLOR_RGB2BGR)
-                            name = app.inference(fin_img, time.time(), threshold_arcface)
+                            name = app.inference(fin_img, vid_cap.get(cv2.CAP_PROP_POS_MSEC), threshold_arcface)
                             if name == "":
                                 annotator.box_label(xyxy, name, color=(10,20,30))
                             else:
@@ -215,7 +215,7 @@ def run(
                             h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
                         else:  # stream
                             fps, w, h = 30, im0.shape[1], im0.shape[0]
-                        save_path = str(Path(save_path).with_suffix('.mp4'))  # force *.mp4 suffix on results videos
+                        save_path = str(Path(save_path).with_suffix('.m4v'))  # force *.mp4 suffix on results videos
                         vid_writer[i] = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer[i].write(im0)
 

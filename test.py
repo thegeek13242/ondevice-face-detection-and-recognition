@@ -1,21 +1,16 @@
+import os
 import gradio as gr
-import json
+from PIL import Image
 
-# Define the Gradio app interface
-def app(json_file):
-    # Read the contents of the JSON file
-    with open(json_file, "r") as f:
-        data = json.load(f)
+def display_images(folder_path):
+    images = []
+    for filename in os.listdir(folder_path):
+        if filename.endswith('.jpg') or filename.endswith('.png'):
+            images.append(Image.open(os.path.join(folder_path, filename)))
+    return images
 
-    # Convert the JSON object to a string and return it
-    data_str = json.dumps(data)
-    return data_str
+def image_display(folder_path):
+    return display_images(folder_path)
 
-# Define the Gradio app input interface
-input_file = gr.inputs.File(label="Upload JSON file")
-
-# Define the Gradio app output interface
-output_text = gr.outputs.Textbox()
-
-# Define the Gradio app interface
-gr.Interface(fn=app, inputs=input_file, outputs=output_text).launch()
+iface = gr.Interface(fn=image_display, inputs="text", outputs="image", title="Display Images")
+iface.launch()
