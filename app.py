@@ -26,9 +26,9 @@ def video_processing(video, threshold, ref_face_dir):
     with open("logfaces.json", "w") as f:
         f.write("[]")
     
-    # # delete all files in crops folder
-    # for file in os.listdir("crops"):
-    #     os.remove(os.path.join("crops",file))
+    # delete all files in crops folder
+    for file in os.listdir("crops"):
+        os.remove(os.path.join("crops",file))
 
     file_paths = [file.name for file in ref_face_dir]
     update_face_data(file_paths)
