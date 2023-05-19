@@ -21,6 +21,7 @@ from skimage import transform as trans
 import matplotlib.pyplot as plt
 from mxnet.contrib.onnx.onnx2mx.import_model import import_model
 
+import main
 
 def get_model(ctx, model):
     image_size = (112, 112)
@@ -179,8 +180,8 @@ def inference(com_img, ftime):
             min_dist = dist
             min_name = key
     
-    if min_dist > 0.8:
-    # # if np.dot(com_out, embeddings_name[min_name].T) > 0.8:
+    if min_dist > main.THRESHOLD:
+    # # if np.dot(com_out, embeddings_name[min_name].T) > main.THRESHOLD:
         print('No similar face found')
         return
     with open("logfaces.json","r") as f:
