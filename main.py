@@ -1,7 +1,5 @@
 import detect
 
-VIDEO_PATH = 'test2.mp4'
-
 def object_detection():
     detect.main(detect.parse_opt())
 

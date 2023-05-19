@@ -48,3 +48,14 @@ seaborn>=0.11.0
 # pycocotools>=2.0  # COCO mAP
 # roboflow
 # ultralytics  # HUB https://hub.ultralytics.com
+
+# Arcface Requirements
+numpy==1.23.1
+mxnet-cu112
+scipy
+scikit-learn
+scikit-image
+matplotlib
+opencv-python
+easydict
+onnx
