@@ -1,7 +1,5 @@
 import detect
 
-THRESHOLD = 0.8
-
 def object_detection():
     detect.main(detect.parse_opt())
 

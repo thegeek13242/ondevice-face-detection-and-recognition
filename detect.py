@@ -183,7 +183,7 @@ def run(
                         # cv2.imwrite("crop.jpg", crop)
                         if crop.shape[1] > 1:
                             # Image.fromarray(crop[..., ::-1]).save("crop.jpg", quality=95, subsampling=0)  # save RGB
-                            fin_img = cv2.cvtColor(np.array(Image.fromarray(crop[..., ::-1])), cv2.COLOR_RGB2BGR)
+                            fin_img = cv2.cvtColor(np.array(Image.fromarray(crop[..., ::-1])), cv2.COLOR_RGB2BGR, threshold_arcface)
                             app.inference(fin_img, time.time())
 
             # Stream results
@@ -257,6 +257,8 @@ def parse_opt():
     parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
     parser.add_argument('--dnn', action='store_true', help='use OpenCV DNN for ONNX inference')
     parser.add_argument('--vid-stride', type=int, default=5, help='video frame-rate stride')
+    parser.add_argument('--threshold_arcface', type=int, default=0.7, help='video frame-rate stride')
+
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
     print_args(vars(opt))

@@ -162,7 +162,7 @@ def update_face_data(dirname):
             out = get_feature(model, pre)
             embeddings_name[file] = out
 
-def inference(com_img, ftime):
+def inference(com_img, ftime, THRESHOLD=0.7):
     # com_img = cv2.imread(image)
     com_pre = get_input(detector, com_img)
     try: 
@@ -180,7 +180,7 @@ def inference(com_img, ftime):
             min_dist = dist
             min_name = key
     
-    if min_dist > main.THRESHOLD:
+    if min_dist > THRESHOLD:
     # # if np.dot(com_out, embeddings_name[min_name].T) > main.THRESHOLD:
         print('No similar face found')
         return
@@ -220,12 +220,3 @@ def inference(com_img, ftime):
 #     sim = np.dot(out1, out2.T)
     # Print predictions
 
-
-# Run inference
-if __name__ == '__main__':
-    with open("logfaces.json","w") as f:
-        f.write("[]")
-    print("Success")
-    update_face_data("face_data")
-    img = cv2.imread("timg4.jpg")
-    inference(img, 32131)

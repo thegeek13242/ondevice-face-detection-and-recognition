@@ -1,6 +1,6 @@
 # On-device Face Detection & Recognition
 
-We recommend running the code on *Linux-based systems*. There are some conflicts with the dependencies on Windows.
+We recommend running the code on **Linux-based systems**. There are some conflicts with the dependencies on Windows.
 
 ## Main Branch
 
