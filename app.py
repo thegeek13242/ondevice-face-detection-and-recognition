@@ -1,15 +1,3 @@
-# import detect
-# import gradio
-
-# VIDEO_PATH = 'test4.mp4'
-
-# def object_detection():
-#     detect.main(detect.parse_opt())
-
-# if __name__ == '__main__':
-#     object_detection()
-
-
 import gradio as gr
 from Arcface.app import update_face_data
 import os
@@ -49,7 +37,7 @@ def video_processing(video, threshold, ref_face_dir):
 # Define the Gradio interface inputs and outputs
 inputs = [
     gr.Video(format="mp4"),
-    gr.Number(value=0.8, label="Threshold"),
+    gr.Number(value=0.7, label="Threshold"),
     gr.UploadButton(
         label="Reference Faces", file_types=["images"], file_count="multiple"
     ),
@@ -62,7 +50,6 @@ app = gr.Interface(
     inputs=inputs,
     outputs=outputs,
     title="Face Recognition in a Video",
-    description="Apply a threshold to a video using a predefined function.",
 )
 
 # Run the app

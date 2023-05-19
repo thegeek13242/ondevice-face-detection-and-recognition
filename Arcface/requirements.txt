@@ -1,9 +1,0 @@
-numpy==1.23.1
-mxnet
-scipy
-scikit-learn
-scikit-image
-matplotlib
-opencv-python
-easydict
-onnx
