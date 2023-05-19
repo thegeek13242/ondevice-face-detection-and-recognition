@@ -84,6 +84,7 @@ def run(
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
         vid_stride=1,  # video frame-rate stride
+        threshold_arcface=0.7,
 ):
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
